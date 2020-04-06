@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">课程表</string>
+    <string name="lastWeek">上一周</string>
+    <string name="nextWeek">下一周</string>
+</resources>
