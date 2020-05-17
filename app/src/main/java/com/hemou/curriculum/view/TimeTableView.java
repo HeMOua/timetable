@@ -1,4 +1,4 @@
-package com.hemou.curriculum.component;
+package com.hemou.curriculum.view;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.hemou.curriculum.Course;
+import com.hemou.curriculum.pojo.Course;
 import com.hemou.curriculum.R;
-import com.hemou.curriculum.RoundTextView;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TimeTable extends LinearLayout {
+public class TimeTableView extends LinearLayout {
 
     //星期
     private String[] weekTitle = {"一", "二", "三", "四", "五", "六", "七"};
@@ -70,13 +69,13 @@ public class TimeTable extends LinearLayout {
 
     private int currentX;
 
-    public TimeTable(Context context) {
+    public TimeTableView(Context context) {
         super(context);
         this.mContext = context;
         initView();
     }
 
-    public TimeTable(Context context, @Nullable AttributeSet attrs) {
+    public TimeTableView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.mContext = context;
         initView();
@@ -91,7 +90,7 @@ public class TimeTable extends LinearLayout {
         if (!params.isEmpty()) {
             try {
                 for (String key : params.keySet()) {
-                    Class<TimeTable> timeTableClass = TimeTable.class;
+                    Class<TimeTableView> timeTableClass = TimeTableView.class;
                     String methodName = "set" + key.substring(0, 1).toUpperCase() + key.substring(1);
                     Method method = timeTableClass.getDeclaredMethod(methodName, int.class);
                     method.invoke(this, params.get(key));
@@ -187,7 +186,7 @@ public class TimeTable extends LinearLayout {
         //左侧节次标签
         addLeftNumber(mMainLayout);
         //课程信息
-        if (null == courseMap) {//数据为空
+        if (null == courseMap || courseMap.isEmpty()) {//数据为空
             addVerticalTableLine(mMainLayout);
             TextView emptyLayoutTextView = createTextView("暂无数据！", titleSize, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 0, getResources().getColor(R.color.textColor), Color.WHITE);
             mMainLayout.addView(emptyLayoutTextView);

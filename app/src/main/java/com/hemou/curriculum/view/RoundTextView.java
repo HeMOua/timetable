@@ -1,4 +1,4 @@
-package com.hemou.curriculum;
+package com.hemou.curriculum.view;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;

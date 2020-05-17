@@ -2,4 +2,6 @@
     <string name="app_name">课程表</string>
     <string name="lastWeek">上一周</string>
     <string name="nextWeek">下一周</string>
+    <string name="back">返回</string>
+    <string name="delCourse">删除课程</string>
 </resources>

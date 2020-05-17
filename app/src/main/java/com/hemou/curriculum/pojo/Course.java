@@ -1,20 +1,19 @@
-package com.hemou.curriculum;
+package com.hemou.curriculum.pojo;
 
 public class Course implements Cloneable {
     private int id;
     private String courseName;//课程名
     private String teacherName;//教师名
+    //格式：星期-节次-单双周-房号
+    private String courseTime;//上课时间
+    private int startWeek;//开始周次
+    private int endWeek;//结束周次
+
     private String classroom;//教室
     private String weekType;//单双周类型
     private int day;//星期几
     private int section;//节次
-    private int startWeek;//开始周次
-    private int endWeek;//结束周次
 
-    /**
-     * 格式：星期-节次-单双周-房号
-     */
-    private String courseTime;//上课时间
 
     public Course() {
     }

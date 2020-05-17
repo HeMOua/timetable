@@ -6,9 +6,10 @@ import android.util.Log;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.hemou.curriculum.activity.MainActivity;
+import com.hemou.curriculum.dao.CourseDao;
+import com.hemou.curriculum.pojo.Course;
+import com.hemou.curriculum.util.JsonDataUtil;
 
 import org.json.JSONException;
 import org.junit.Test;
@@ -26,6 +27,8 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+
+
     @Test
     public void useAppContext() {
         // Context of the app under test.
@@ -40,8 +43,6 @@ public class ExampleInstrumentedTest {
     }
 
     public void testJson() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-
         List<Course> courseList = new ArrayList<>();
         courseList.add((new Course("形式与政策", "肖惠朝", 1, 7, "3:5:s:XC-D")));
         courseList.add((new Course("计算机信息安全", "李照明", 1, 11, "3:5:d:XC207;5:3:n:XC205")));
@@ -52,14 +53,9 @@ public class ExampleInstrumentedTest {
         courseList.add((new Course("计算机视觉应用", "王国强", 1, 8, "2:5:n:XC305;4:1:n:XC409")));
         courseList.add((new Course("计算机新技术", "李淳凡", 6, 9, "1:1:n:XC4;1:7:n:XC4;2:1:n:XC4;3:3:n:XC4")));
 
-        JSONArray courses = JSON.parseArray(JSON.toJSONString(courseList));
-
-        jsonObject.put("courses", courses);
-
-        Context context = new MainActivity();
-        // context.openFileInput()
-
-        List<Course> cs = JSON.parseArray(jsonObject.getJSONArray("courses").toJSONString(), Course.class);
-        System.out.println(cs.toString());
+        CourseDao dao = new CourseDao(InstrumentationRegistry.getInstrumentation().getContext());
+        for(Course course : courseList){
+            dao.insert(course);
+        }
     }
 }

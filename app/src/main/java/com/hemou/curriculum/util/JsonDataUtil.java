@@ -1,4 +1,4 @@
-package com.hemou.curriculum;
+package com.hemou.curriculum.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;

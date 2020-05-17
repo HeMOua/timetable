@@ -3,7 +3,9 @@ package com.hemou.curriculum;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.hemou.curriculum.component.TimeTable;
+import com.hemou.curriculum.activity.MainActivity;
+import com.hemou.curriculum.pojo.Course;
+import com.hemou.curriculum.view.TimeTableView;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
@@ -27,7 +29,7 @@ public class ExampleUnitTest {
 
     @Test
     public void testReflect(){
-        TimeTable timeTable = new TimeTable(new MainActivity());
+        TimeTableView timeTable = new TimeTableView(new MainActivity());
         Map<String, Integer> map = new HashMap<>();
         map.put("maxSection", 100);
         map.put("radius", 20);
