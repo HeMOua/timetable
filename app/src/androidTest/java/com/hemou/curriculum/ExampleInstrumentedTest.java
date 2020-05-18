@@ -1,15 +1,12 @@
 package com.hemou.curriculum;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.hemou.curriculum.activity.MainActivity;
 import com.hemou.curriculum.dao.CourseDao;
 import com.hemou.curriculum.pojo.Course;
-import com.hemou.curriculum.util.JsonDataUtil;
 
 import org.json.JSONException;
 import org.junit.Test;
@@ -35,11 +32,6 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         assertEquals("com.hemou.curriculum", appContext.getPackageName());
-    }
-
-    public void testParseJson(){
-        String json = JsonDataUtil.getJson(new MainActivity(), "config.json");
-        Log.d("parseJson", json);
     }
 
     public void testJson() throws JSONException {

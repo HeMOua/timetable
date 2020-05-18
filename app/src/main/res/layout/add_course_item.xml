@@ -2,18 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--课次信息-->
+    <!--课程信息-->
     <LinearLayout
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="10dp"
-        android:elevation="2dp"
-        android:background="@drawable/item_bg"
         android:padding="18dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <!--时间-->
+        <!--课程-->
         <LinearLayout
             android:layout_marginBottom="23dp"
             android:layout_width="match_parent"
@@ -22,30 +17,16 @@
                 android:layout_marginRight="18dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/time"/>
-            <TextView
-                android:id="@+id/tvDay"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:src="@drawable/book"/>
+            <EditText
+                android:id="@+id/etCourseName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
-                android:hint="星期"
+                android:hint="课程名"
                 android:background="@null"/>
-            <TextView
-                android:id="@+id/tvSection"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:hint="节次"
-                android:background="@null"/>
-            <ImageView
-                android:id="@+id/ivDel"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/trash"/>
         </LinearLayout>
-        <!--单双周-->
+        <!--授课老师-->
         <LinearLayout
             android:layout_marginBottom="23dp"
             android:layout_width="match_parent"
@@ -54,36 +35,52 @@
                 android:layout_marginRight="18dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/calendar"/>
-            <TextView
-                android:id="@+id/tvWeekType"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:src="@drawable/user"/>
+            <EditText
+                android:id="@+id/etTeacherName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
-                android:hint="单双周"
+                android:hint="授课教师"
                 android:background="@null"/>
         </LinearLayout>
 
-        <!--地址-->
+        <!--周次-->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <!--起始周次-->
             <ImageView
                 android:layout_marginRight="18dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/location"/>
-            <TextView
-                android:id="@+id/tvClassroom"
-                android:layout_width="match_parent"
+                android:src="@drawable/start"/>
+            <EditText
+                android:id="@+id/etStartWeek"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
-                android:hint="教室"
+                android:hint="起始周次"
+                android:background="@null"/>
+
+            <ImageView
+                android:layout_marginRight="18dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/end"/>
+            <EditText
+                android:id="@+id/etEndWeek"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:hint="终止周次"
                 android:background="@null"/>
         </LinearLayout>
 
 
     </LinearLayout>
+
 </LinearLayout>

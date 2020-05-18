@@ -1,6 +1,13 @@
 package com.hemou.curriculum.pojo;
 
-public class Course implements Cloneable {
+import android.text.TextUtils;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class Course implements Cloneable, Serializable {
     private int id;
     private String courseName;//课程名
     private String teacherName;//教师名
@@ -18,7 +25,7 @@ public class Course implements Cloneable {
     public Course() {
     }
 
-    public Course(String courseName, String teacherName , int startWeek, int endWeek, String courseTime) {
+    public Course(String courseName, String teacherName, int startWeek, int endWeek, String courseTime) {
         this.courseName = courseName;
         this.teacherName = teacherName;
         this.courseTime = courseTime;
@@ -107,7 +114,7 @@ public class Course implements Cloneable {
     }
 
 
-    public Course clone()  {
+    public Course clone() {
         try {
             return (Course) super.clone();
         } catch (CloneNotSupportedException e) {
@@ -129,5 +136,56 @@ public class Course implements Cloneable {
                 ", endWeek=" + endWeek +
                 ", courseTime='" + courseTime + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return startWeek == course.startWeek &&
+                endWeek == course.endWeek &&
+                Objects.equals(courseName, course.courseName) &&
+                Objects.equals(teacherName, course.teacherName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseName, teacherName, startWeek, endWeek);
+    }
+
+    public List<Course> toDetail() {
+        List<Course> courseList = new ArrayList<>();
+        if (TextUtils.isEmpty(courseTime)) return courseList;
+        String[] courseArray = courseTime.split(";");
+        for (int i = 0; i < courseArray.length; i++) {
+            Course clone = this.clone();
+            String[] info = courseArray[i].split(":");
+
+            clone.setDay(Integer.parseInt(info[0]));
+            clone.setSection(Integer.parseInt(info[1]));
+            clone.setWeekType(info[2]);
+            clone.setClassroom(info[3]);
+
+            courseList.add(clone);
+        }
+        return courseList;
+    }
+
+    public String toTime(){
+        return String.format("%d:%d:%s:%s", day, section, weekType, classroom);
+    }
+
+    public static Course toCourse(List<Course> courseList, int id){
+        if(null == courseList)return null;
+        Course course = new Course();
+        course.setId(id);
+        StringBuffer sb = new StringBuffer();
+        for(int i = 0, len = courseList.size(); i < len; i++){
+            sb.append(courseList.get(i).toTime());
+            if(i != len - 1)sb.append(";");
+        }
+        course.setCourseTime(String.valueOf(sb));
+        return course;
     }
 }

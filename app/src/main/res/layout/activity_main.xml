@@ -13,27 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:background="@color/titleColor"
-                android:orientation="horizontal"
-                android:paddingTop="8dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:onClick="category"
-                    android:src="@drawable/category"/>
-                <TextView
-                    android:id="@+id/tvInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true" />
-
-            </RelativeLayout>
-
             <com.hemou.curriculum.view.TimeTableView
                 android:id="@+id/timeTable"
                 android:layout_width="match_parent"

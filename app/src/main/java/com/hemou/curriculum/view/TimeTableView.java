@@ -2,12 +2,15 @@ package com.hemou.curriculum.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -63,9 +66,12 @@ public class TimeTableView extends LinearLayout {
     private Date startDate;
     private long weekNum;
 
+    //菜单栏
+    private ImageView mCategory;
+    //周次信息
     private TextView mWeekTitle;
     private LinearLayout mMainLayout;
-    private LinearLayout mBottomLayout;
+    private RelativeLayout mTitleLayout;
 
     private int currentX;
 
@@ -113,6 +119,14 @@ public class TimeTableView extends LinearLayout {
     }
 
     /**
+     * 设置菜单按钮的监听事件
+     * @param listener
+     */
+    public void addListener(OnClickListener listener){
+        mCategory.setOnClickListener(listener);
+    }
+
+    /**
      * 加载数据
      *
      * @param courses
@@ -136,6 +150,7 @@ public class TimeTableView extends LinearLayout {
         for (Course c : courseList) {
             if (c.getStartWeek() > weekNum || c.getEndWeek() < weekNum) continue;
             String courseTime = c.getCourseTime();
+            if(TextUtils.isEmpty(courseTime))continue;
             String[] courseArray = courseTime.split(";");
             for (int i = 0; i < courseArray.length; i++) {
                 Course clone = c.clone();
@@ -188,14 +203,13 @@ public class TimeTableView extends LinearLayout {
         //课程信息
         if (null == courseMap || courseMap.isEmpty()) {//数据为空
             addVerticalTableLine(mMainLayout);
-            TextView emptyLayoutTextView = createTextView("暂无数据！", titleSize, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 0, getResources().getColor(R.color.textColor), Color.WHITE);
+            TextView emptyLayoutTextView = createTextView("已结课，或未添加课程信息！", titleSize, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 0, getResources().getColor(R.color.textColor), Color.WHITE);
             mMainLayout.addView(emptyLayoutTextView);
         } else {//不为空
             for (int i = 1; i <= weeksNum; i++) {
                 addVerticalTableLine(mMainLayout);
                 addDayCourse(mMainLayout, courseMap, i);
             }
-            addBottomButton();
         }
         invalidate();
     }
@@ -206,13 +220,22 @@ public class TimeTableView extends LinearLayout {
      * @param pViewGroup
      */
     private void addWeekTitle(ViewGroup pViewGroup) {
+        mTitleLayout = new RelativeLayout(mContext);
+        mTitleLayout.setPadding(8, 15, 8, 15);
+        mTitleLayout.setBackgroundColor(getResources().getColor(R.color.titleColor));
+        //周次信息
         mWeekTitle = new TextView(mContext);
-        mWeekTitle.setBackgroundColor(getResources().getColor(R.color.titleColor));
         mWeekTitle.setTextSize(titleSize);
         mWeekTitle.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        mWeekTitle.setGravity(Gravity.CENTER);
-        mWeekTitle.setPadding(0, 8, 0, 8);
-        pViewGroup.addView(mWeekTitle);
+        mWeekTitle.setGravity(Gravity.CENTER_HORIZONTAL);
+        mTitleLayout.addView(mWeekTitle);
+        //左侧菜单栏
+        mCategory = new ImageView(mContext);
+        mCategory.setImageResource(R.drawable.category);
+        mCategory.setLayoutParams(new LayoutParams(dip2px(30), dip2px(30)));
+        mTitleLayout.addView(mCategory);
+
+        pViewGroup.addView(mTitleLayout);
         addHorizontalTableLine(pViewGroup);
     }
 
@@ -312,31 +335,6 @@ public class TimeTableView extends LinearLayout {
         textView.setGravity(Gravity.CENTER);
         textView.setText(String.format("%s\n%s\n%d~%d周\n%s", course.getCourseName(), course.getTeacherName(), course.getStartWeek(), course.getEndWeek(), course.getClassroom()));
         pViewGroup.addView(textView);
-    }
-
-    private void addBottomButton() {
-        if (null != mBottomLayout) removeView(mBottomLayout);
-        mBottomLayout = new LinearLayout(mContext);
-        mBottomLayout.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        mBottomLayout.setPadding(0, dip2px(30), 0, dip2px(30));
-        mBottomLayout.setOrientation(HORIZONTAL);
-        addView(mBottomLayout);
-        TextView lastButton = createTextView("上一周", buttonSize, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 1, getResources().getColor(R.color.seven), -1);
-        lastButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleWeek(-1);
-            }
-        });
-        mBottomLayout.addView(lastButton);
-        TextView nextButton = createTextView("下一周", buttonSize, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 1, getResources().getColor(R.color.seven), -1);
-        nextButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleWeek(1);
-            }
-        });
-        mBottomLayout.addView(nextButton);
     }
 
 

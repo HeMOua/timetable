@@ -5,25 +5,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.RadioGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.hemou.curriculum.R;
+import com.hemou.curriculum.dao.CourseDao;
 import com.hemou.curriculum.pojo.Course;
 
 import java.util.List;
 
-public class LessionAdapter extends BaseAdapter {
+public class LessonAdapter extends BaseAdapter {
 
+    private CourseDao dao;
     private Context context;
     private LayoutInflater layoutInflater;
     private List<Course> courseList;
+    private View.OnClickListener listener;
 
-    public LessionAdapter(Context context, @NonNull List<Course> courseList){
+    public LessonAdapter(Context context, @NonNull List<Course> courseList, View.OnClickListener listener){
         this.context = context;
+        this.courseList = courseList;
         this.layoutInflater = LayoutInflater.from(context);
+        this.listener = listener;
+        dao = new CourseDao(context);
     }
 
     @Override
@@ -47,10 +53,13 @@ public class LessionAdapter extends BaseAdapter {
         if(null == convertView){
             convertView = layoutInflater.inflate(R.layout.lession_item, null);
             holder = new ViewHolder();
-            holder.etDay = convertView.findViewById(R.id.etDay);
-            holder.etSection = convertView.findViewById(R.id.etSection);
-            holder.rgWeekType = convertView.findViewById(R.id.rgWeekType);
-            holder.etClassroom = convertView.findViewById(R.id.etClassroom);
+            holder.ivDel = convertView.findViewById(R.id.ivDel);
+            holder.tvDay = convertView.findViewById(R.id.tvDay);
+            holder.tvSection = convertView.findViewById(R.id.tvSection);
+            holder.tvWeekType = convertView.findViewById(R.id.tvWeekType);
+            holder.tvClassroom = convertView.findViewById(R.id.tvClassroom);
+            holder.ivDel.setTag(courseList.get(position));
+            holder.ivDel.setOnClickListener(listener);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -60,23 +69,24 @@ public class LessionAdapter extends BaseAdapter {
     }
 
     private void setContent(int i, ViewHolder view){
-        view.etDay.setText(courseList.get(i).getDay());
-        view.etSection.setText(courseList.get(i).getSection());
+        view.tvDay.setText(String.format("星期%d", courseList.get(i).getDay()));
+        view.tvSection.setText(String.format("第%s节课", courseList.get(i).getSection()));
         String weekType = courseList.get(i).getWeekType();
         if("s".equals(weekType)){
-            view.rgWeekType.check(R.id.rbSingleWeek);
+            view.tvWeekType.setText("单周");
         }else if("d".equals(weekType)){
-            view.rgWeekType.check(R.id.rbDoubleWeek);
+            view.tvWeekType.setText("双周");
         }else{
-            view.rgWeekType.check(R.id.rbNormalWeek);
+            view.tvWeekType.setText("正常周次");
         }
-        view.etClassroom.setText(courseList.get(i).getClassroom());
+        view.tvClassroom.setText(String.valueOf(courseList.get(i).getClassroom()));
     }
 
     static class ViewHolder{
-        EditText etDay;
-        EditText etSection;
-        RadioGroup rgWeekType;
-        EditText etClassroom;
+        TextView tvDay;
+        TextView tvSection;
+        TextView tvWeekType;
+        TextView tvClassroom;
+        ImageView ivDel;
     }
 }

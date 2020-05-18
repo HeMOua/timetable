@@ -7,10 +7,8 @@ import com.hemou.curriculum.activity.MainActivity;
 import com.hemou.curriculum.pojo.Course;
 import com.hemou.curriculum.view.TimeTableView;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,9 +63,6 @@ public class ExampleUnitTest {
         jsonObject.put("cell_height", 75);
         jsonObject.put("title_height", 30);
         jsonObject.put("number_width", 20);
-
-        FileUtils.writeStringToFile(new File("/config.json"), jsonObject.toJSONString(), "UTF-8");
-
 
         // List<Course> cs = JSON.parseArray(jsonObject.getJSONArray("courses").toJSONString(), Course.class);
         // System.out.println(cs.toString());

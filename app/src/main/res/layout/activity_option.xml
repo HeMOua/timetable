@@ -28,6 +28,15 @@
                 android:layout_marginTop="2dp"
                 android:textSize="20sp"
                 android:text="@string/back"/>
+            <TextView
+                android:id="@+id/tvAlterDate"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:textSize="20sp"
+                android:onClick="alterDate"
+                android:text="修改开学时间"/>
             <ImageView
                 android:layout_alignParentEnd="true"
                 android:layout_width="30dp"
